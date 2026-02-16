@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Empleados (
     apellido1 VARCHAR(255) NOT NULL,
     apellido2 VARCHAR(255),
     puesto ENUM ('GERENTE','CAJERO','BARISTA'),
-    estatus ENUM ('ACTIVO','INACTIVO','BAJA TEMPORAL') DEFAULT 'ACTIVO',
+    estatus ENUM ('ACTIVO','INACTIVO','BAJA_TEMPORAL') DEFAULT 'ACTIVO',
     fechaIngreso DATE NOT NULL DEFAULT CURRENT_DATE,
     fechaBaja DATE CHECK (fechaBaja>=fechaIngreso)
 );
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Pedidos (
     	ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS DetallePedidos (
+CREATE TABLE IF NOT EXISTS PedidosDetalle (
     idDetallePedido INT PRIMARY KEY AUTO_INCREMENT,
     idPedido INT,
     idProducto INT,
