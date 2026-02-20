@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS Cafeteria;
 USE Cafeteria;
 
 CREATE TABLE IF NOT EXISTS Empleados (
-    idEmpleado INT PRIMARY KEY,
+    idEmpleado INT PRIMARY KEY AUTO_INCREMENT,
     usuario VARCHAR(50) NOT NULL UNIQUE,
     contrasenia VARCHAR(50) NOT NULL,
     telefono VARCHAR(12) NOT NULL UNIQUE,
@@ -13,8 +13,9 @@ CREATE TABLE IF NOT EXISTS Empleados (
     apellido2 VARCHAR(255),
     puesto ENUM ('GERENTE','CAJERO','BARISTA'),
     estatus ENUM ('ACTIVO','INACTIVO','BAJA_TEMPORAL') DEFAULT 'ACTIVO',
-    fechaIngreso DATE NOT NULL DEFAULT CURRENT_DATE,
-    fechaBaja DATE CHECK (fechaBaja>=fechaIngreso)
+    fechaIngreso DATE DEFAULT (CURRENT_DATE),
+    fechaBaja DATE CHECK (fechaBaja>=fechaIngreso),
+    foto VARCHAR(100) DEFAULT 'default.jpg'
 );
 
 CREATE TABLE IF NOT EXISTS ProductosCategorias(
@@ -40,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Pedidos (
     idPedido INT PRIMARY KEY AUTO_INCREMENT,
     idEmpleado INT,
     estatusPedido ENUM ('PEDIDO RECIBIDO','EN PREPARACION','ESPERANDO RECOGIDA','PEDIDO ENTREGADO') DEFAULT 'PEDIDO RECIBIDO',
-    horaRealizada DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    horaRealizada DATETIME DEFAULT CURRENT_TIMESTAMP,
     horaEntregada DATETIME CHECK (horaEntregada>=horaRealizada),
     CONSTRAINT fk_Empleados FOREIGN KEY (idEmpleado)
     	REFERENCES Empleados(idEmpleado)
