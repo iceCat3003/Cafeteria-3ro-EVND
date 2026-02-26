@@ -6,7 +6,8 @@ package backend;
 
 /**
  *
- * @author icecat
+ * @author
+ * Daniel Espinoza Cortés
  */
 public class NewClass {
     
