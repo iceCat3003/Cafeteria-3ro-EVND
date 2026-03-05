@@ -41,7 +41,7 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
     public Usuario loginUsuario(String usuario, String contrasenia){
         Usuario u = null;
         Rol rol = null;
-        String sql = "SELECT Usuarios.idUsuario,\n" + "Usuarios.nombre1, "+
+        String sql = "SELECT Usuarios.idUsuario, Usuarios.nombre1, "+
                 "Usuarios.apellido1, " +
                 "Usuarios.apellido2, " +
                 "Usuarios.telefono, " +
