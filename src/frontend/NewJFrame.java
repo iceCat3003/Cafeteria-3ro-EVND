@@ -6,6 +6,7 @@ package frontend;
 
 import backend.dao.UsuarioDAO;
 import backend.modelos.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -170,6 +171,8 @@ public class NewJFrame extends javax.swing.JFrame {
             Administrador admin=new Administrador();
             admin.setVisible(true);
             this.dispose();
+        }else {
+            JOptionPane.showMessageDialog(this, "Información de inicio de sesión incorrecta");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

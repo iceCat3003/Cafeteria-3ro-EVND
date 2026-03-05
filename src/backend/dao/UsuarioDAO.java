@@ -62,10 +62,11 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
                 PreparedStatement prep = con.prepareStatement(sql);
                 ) {
             prep.setString(1, usuario);
-            prep.setString(1, contrasenia);
+            prep.setString(2, contrasenia);
             ResultSet rs = prep.executeQuery();
             try {
                 while (rs.next()) {
+                    u = new Usuario();
                     u.setIdUsuario(rs.getInt("idUsuario"));
                     u.setNombre1(rs.getString("nombre1"));
                     u.setNombre2(rs.getString("nombre2"));
