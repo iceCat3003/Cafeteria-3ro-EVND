@@ -9,7 +9,7 @@ CREATE TABLE Roles (
     nombreRol VARCHAR(20) NOT NULL UNIQUE,
     
     CONSTRAINT nombreRol_no_vacio CHECK (LENGTH(nombreRol) > 0),
-    CONSTRAINT nombreRol_valido CHECK (nombreRol REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$')
+    CONSTRAINT nombreRol_valido CHECK (nombreRol REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$')
 ) ENGINE=InnoDB;
 
 -- =========================
@@ -41,10 +41,10 @@ CREATE TABLE Usuarios (
     CONSTRAINT telefono_solo_num CHECK (telefono REGEXP '^[0-9]+$'),
     CONSTRAINT nombre1_no_vacio CHECK (LENGTH(nombre1) > 0),
     CONSTRAINT apellido1_no_vacio CHECK (LENGTH(apellido1) > 0),
-    CONSTRAINT nombre1_valido CHECK (nombre1 REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$'),
-    CONSTRAINT nombre2_valido CHECK (nombre2 IS NULL OR nombre2 REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$'),
-    CONSTRAINT apellido1_valido CHECK (apellido1 REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$'),
-    CONSTRAINT apellido2_valido CHECK (apellido2 IS NULL OR apellido2 REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$'),
+    CONSTRAINT nombre1_valido CHECK (nombre1 REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$'),
+    CONSTRAINT nombre2_valido CHECK (nombre2 IS NULL OR nombre2 REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$'),
+    CONSTRAINT apellido1_valido CHECK (apellido1 REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$'),
+    CONSTRAINT apellido2_valido CHECK (apellido2 IS NULL OR apellido2 REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$'),
     CONSTRAINT usuario_valido CHECK (usuario REGEXP '^[A-Za-z0-9_]+$'),
     
     INDEX idx_usuario_rol (idRol)
@@ -63,7 +63,7 @@ CREATE TABLE MateriasPrimas (
     
     CONSTRAINT nombre_prima_no_vacio CHECK (LENGTH(nombre) > 0),
     CONSTRAINT descripcion_prima_no_vacia CHECK (LENGTH(descripcion) > 0),
-    CONSTRAINT nombre_prima_valido CHECK (nombre REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$')
+    CONSTRAINT nombre_prima_valido CHECK (nombre REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$')
 ) ENGINE=InnoDB;
 
 -- =========================
@@ -79,7 +79,7 @@ CREATE TABLE Productos (
     
     CONSTRAINT nombre_prod_no_vacio CHECK (LENGTH(nombre) > 0),
     CONSTRAINT descripcion_prod_no_vacia CHECK (LENGTH(descripcion) > 0),
-    CONSTRAINT nombre_prod_valido CHECK (nombre REGEXP '^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([[:space:]]|[''-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$')
+    CONSTRAINT nombre_prod_valido CHECK (nombre REGEXP '^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ ]+$')
 ) ENGINE=InnoDB;
 
 -- =========================
