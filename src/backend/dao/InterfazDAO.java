@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface InterfazDAO<T> {
     public ArrayList <T> obtenerRegistros();
     public T obtenerPorID(int id);
-    public boolean insertar (T objeto);
+    public int insertar (T objeto);
     public boolean actualizar (T objeto);
     public boolean borrar (int id);
 }

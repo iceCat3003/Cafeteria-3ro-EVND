@@ -126,7 +126,7 @@ public class Usuario {
      *         <p>Cuando la cadena excede 20 caracteres
     */
     public void setNombre2(String nombre2)
-            throws CadenaInvalidaException, CadenaLargaException{
+            throws CadenaInvalidaException, CadenaLargaException {
         if (nombre2 != null && !nombre2.isBlank()) {
             if (nombre2.length() <= 20) {
                 if (nombre2.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
@@ -145,10 +145,10 @@ public class Usuario {
     }
     
     /**
-     * Devuelve el primer nombre y el segundo nombre del Usuario separado
-     * por un espacio como una sola cadena
+     * <p>Devuelve el primer nombre y el segundo nombre del Usuario separado
+     * por un espacio como una sola cadena</p>
      * 
-     * @return nombre1+" "+nombre2 o si nombre2 es null entonces nombre1
+     * @return nombre1+" "+nombre2 o si nombre2 es null, entonces solo nombre1
      */
     public String getNombres() {
         return nombre2 != null? nombre1+" "+nombre2 : nombre1;
@@ -167,16 +167,16 @@ public class Usuario {
      * Establece el primer apellido del Usuario, no puede ser null
      * 
      * @param apellido1
-     *         Correspondiente a la columna apellido1 en la base de datos
+     *         <p>Correspondiente a la columna apellido1 en la base de datos</p>
      * 
      * @throws CadenaInvalidaException 
-     *         <p>Cuando el parametro contiene números o símbolos
+     *         <p>Cuando el parametro contiene números o símbolos</p>
      * 
      * @throws CadenaLargaException
-     *         <p>Cuando la longitud de la cadena excede 20 caracteres
+     *         <p>Cuando la longitud de la cadena excede 20 caracteres</p>
      * 
      * @throws CadenaVaciaException
-     *         <p>Cuando la cadena está vacía o es null
+     *         <p>Cuando la cadena está vacía o es null</p>
      */
     public void setApellido1(String apellido1)
             throws CadenaInvalidaException, CadenaLargaException, CadenaVaciaException {
@@ -211,14 +211,14 @@ public class Usuario {
      * Establece el segundo apellido del Usuario, éste puede ser null
      * 
      * @param apellido2
-     *         Una cadena que solamente puede contener letras mayúsculas, 
-     *         minúsculas y espacios, puede ser null
+     *         <p>Una cadena que solamente puede contener letras mayúsculas, 
+     *         minúsculas y espacios, puede ser null</p>
      * 
      * @throws CadenaInvalidaException 
-     *         <p>Cuando la cadena contiene números o símbolos
+     *         <p>Cuando la cadena contiene números o símbolos</p>
      * 
      * @throws CadenaLargaException
-     *         <p>Cuando la longitud de la cadena excede 20 caracteres
+     *         <p>Cuando la longitud de la cadena excede 20 caracteres</p>
      */
     public void setApellido2(String apellido2)
             throws CadenaInvalidaException,
@@ -241,9 +241,9 @@ public class Usuario {
     }
     
     /**
-     * Devuelve una cadena que contiene el primer y segundo apellido del Usuario
+     * <p>Devuelve una cadena que contiene el primer y segundo apellido del Usuario
      * separados por un espacio, si el segundo apellido es null solamente
-     * devuelve el primer apellido
+     * devuelve el primer apellido</p>
      * 
      * @return apellido1+" "+apellido2 o si apellido2 es null, apellido1
      */
@@ -252,8 +252,8 @@ public class Usuario {
     }
     
     /**
-     * Devuelve una cadena con primer nombre, segundo nombre, primer apellido y
-     * segundo apellido del usuario separado por espacios
+     * <p>Devuelve una cadena con primer nombre, segundo nombre, primer apellido y
+     * segundo apellido del usuario separado por espacios</p>
      * 
      * @return nombre1+" "+nombre2+" "+apellido1+" "+apellido2
      */
@@ -272,20 +272,21 @@ public class Usuario {
 
     /**
      * <p>Establece el número de teléfono del Usuario de acuerdo a las condiciones
-     * establecidas por la base de datos
+     * establecidas por la base de datos</p>
      * 
      * @param telefono
      *         <p>Solo admite valores numéricos, la longitud de la cadena siempre
-     *         debe ser de 10 caracteres
+     *         debe ser de 10 caracteres</p>
+     * 
      * @throws CadenaInvalidaException 
      *         <p>Cuando la cadena no contiene exactamente 10 caracteres o contiene
-     *         caracteres no numericos
+     *         caracteres no numericos</p>
      * 
      * @throws CadenaVaciaException
-     *         <p>Cuando la cadena está vacía
+     *         <p>Cuando la cadena está vacía</p>
      * 
      * @throws ParametroNullException
-     *         <p>Cuando el parametro es null
+     *         <p>Cuando el parametro es null</p>
      */
     public void setTelefono(String telefono)
             throws CadenaInvalidaException,
@@ -314,23 +315,23 @@ public class Usuario {
 
     /**
      * <p>Establece el nombre de usuario validando que no contenga caracteres
-     * fuera de letras, números y guión bajo
+     * fuera de letras, números y guión bajo</p>
      * 
      * @param usuario
-     *          <p>Conforme a las condiciones establecidas por la base de datos
+     *          <p>Conforme a las condiciones establecidas por la base de datos</p>
      * 
      * @throws CadenaInvalidaException
      *          <p>Cuando la cadena contiene caracteres que no son alfanumericos
-     *          o guión bajo 
+     *          o guión bajo</p>
      * 
      * @throws CadenaLargaException
-     *         <p>Cuando la longitud de la cadena excede 20 caracteres
+     *         Cuando la longitud de la cadena excede 20 caracteres
      * 
      * @throws CadenaVaciaException
-     *         <p>Cuando la cadena está vacía
+     *         Cuando la cadena está vacía
      * 
      * @throws ParametroNullException
-     *         <p>Cuando el parametro es null
+     *         Cuando el parametro es null
      */
     public void setUsuario(String usuario)
             throws CadenaInvalidaException,
@@ -388,7 +389,8 @@ public class Usuario {
 
     /**
      * <p>Devuelve el valor del enum correspondiente al estatus del Usuario: 
-     * ACTIVO, INACTIVO, etc.
+     * ACTIVO, INACTIVO, etc.</p>
+     * 
      * @return el campo enum estadoUsuario
      */
     public EstadoUsuario getEstadoUsuario() {
@@ -397,8 +399,9 @@ public class Usuario {
 
     /**
      * Establece el estatus del Usuario
+     * 
      * @param estadoUsuario 
-     *          <p>Debe corresponder con el un posible valor en la base de datos
+     *          <p>Debe corresponder con el un posible valor en la base de datos</p>
      */
     public void setEstadoUsuario(EstadoUsuario estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
@@ -423,7 +426,8 @@ public class Usuario {
     }
 
     /**
-     * <p>Devuelve un objeto Rol, debido a que los roles de usuario son una tabla
+     * <p>Devuelve un objeto Rol,
+     * debido a que los roles de usuario son una tabla</p>
      * 
      * @return 
      */
@@ -462,6 +466,7 @@ public class Usuario {
 
     /**
      * Devuelve el valor del salario del Usuario
+     * 
      * @return un BigDecimal con el salario del Usuario
      */
     public BigDecimal getSalario() {
