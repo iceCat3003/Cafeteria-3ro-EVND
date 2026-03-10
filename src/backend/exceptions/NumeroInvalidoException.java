@@ -8,9 +8,9 @@ package backend.exceptions;
  *
  * @author icecat
  */
-public class CadenaVaciaException extends Exception {
+public class NumeroInvalidoException extends Exception {
 
-    public CadenaVaciaException(String message) {
+    public NumeroInvalidoException(String message) {
         super(message);
     }
     

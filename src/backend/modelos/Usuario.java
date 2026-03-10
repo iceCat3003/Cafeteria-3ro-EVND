@@ -7,10 +7,7 @@ package backend.modelos;
 import backend.enums.NivelAcceso;
 import backend.enums.EstadoUsuario;
 import backend.exceptions.CadenaInvalidaException;
-import backend.exceptions.CadenaLargaException;
-import backend.exceptions.CadenaVaciaException;
-import backend.exceptions.NumeroNegativoException;
-import backend.exceptions.ParametroNullException;
+import backend.exceptions.NumeroInvalidoException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -74,15 +71,8 @@ public class Usuario {
      * @throws CadenaInvalidaException
      *         <p>Cuando la cadena contiene caracteres que no sean alfanumericos, 
      *         vocales con tilde o espacio
-     * 
-     * @throws CadenaLargaException
-     *         <p>Cuando la longitud de la cadena excede 20 caracteres
-     * 
-     * @throws CadenaVaciaException
-     *         <p>Cuando la cadena está vacía o el parámetro es null
     */
-    public void setNombre1(String nombre1)
-            throws CadenaInvalidaException, CadenaLargaException, CadenaVaciaException {
+    public void setNombre1(String nombre1) throws CadenaInvalidaException {
         if (nombre1!=null && !nombre1.isBlank()) {
             if(nombre1.length() <= 20) {
                 if (nombre1.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
@@ -92,7 +82,7 @@ public class Usuario {
                             "El primer nombre solamente puede contener letras y espacios");
                 }
             } else {
-                throw new CadenaLargaException(
+                throw new CadenaInvalidaException(
                         "El primer nombre debe tener un máximo de 20 caracteres");
             }
         } else {
@@ -121,12 +111,9 @@ public class Usuario {
      * @throws CadenaInvalidaException
      *         <p>cuando contiene números o si contiene caracteres especiales 
      *         (ñ y vocales con acento son válidos)
-     * 
-     * @throws CadenaLargaException
-     *         <p>Cuando la cadena excede 20 caracteres
     */
     public void setNombre2(String nombre2)
-            throws CadenaInvalidaException, CadenaLargaException {
+            throws CadenaInvalidaException {
         if (nombre2 != null && !nombre2.isBlank()) {
             if (nombre2.length() <= 20) {
                 if (nombre2.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
@@ -136,7 +123,7 @@ public class Usuario {
                             "El segundo nombre solamente puede contener letras y espacios");
                 }
             } else {
-                throw new CadenaLargaException(
+                throw new CadenaInvalidaException(
                         "El segundo nombre debe tener un máximo de 20 caracteres");
             }
         } else {
@@ -171,15 +158,8 @@ public class Usuario {
      * 
      * @throws CadenaInvalidaException 
      *         <p>Cuando el parametro contiene números o símbolos</p>
-     * 
-     * @throws CadenaLargaException
-     *         <p>Cuando la longitud de la cadena excede 20 caracteres</p>
-     * 
-     * @throws CadenaVaciaException
-     *         <p>Cuando la cadena está vacía o es null</p>
      */
-    public void setApellido1(String apellido1)
-            throws CadenaInvalidaException, CadenaLargaException, CadenaVaciaException {
+    public void setApellido1(String apellido1) throws CadenaInvalidaException{
         if (apellido1 != null && !apellido1.isBlank()) {
             if (apellido1.length() <= 20) {
                 if (apellido1.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
@@ -189,11 +169,11 @@ public class Usuario {
                             "El primer apellido solamente puede contener letras y espacios");
                 }
             } else {
-                throw new CadenaLargaException(
+                throw new CadenaInvalidaException(
                         "El primer apellido debe tener un máximo de 20 caracteres");
             }
         } else {
-            throw new CadenaVaciaException(
+            throw new CadenaInvalidaException(
                     "El primer apellido no puede estar vacío");
         }
     }
@@ -216,13 +196,8 @@ public class Usuario {
      * 
      * @throws CadenaInvalidaException 
      *         <p>Cuando la cadena contiene números o símbolos</p>
-     * 
-     * @throws CadenaLargaException
-     *         <p>Cuando la longitud de la cadena excede 20 caracteres</p>
      */
-    public void setApellido2(String apellido2)
-            throws CadenaInvalidaException,
-            CadenaLargaException{
+    public void setApellido2(String apellido2) throws CadenaInvalidaException {
         if (apellido2 != null && !apellido2.isBlank()) {
             if (apellido2.length() <= 20) {
                 if (apellido2.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
@@ -232,7 +207,7 @@ public class Usuario {
                             "El segundo apellido solamente puede contener letras y espacios");
                 }
             } else {
-                throw new CadenaLargaException(
+                throw new CadenaInvalidaException(
                         "El segundo apellido debe tener un máximo de 20 caracteres");
             }
         } else {
@@ -279,19 +254,15 @@ public class Usuario {
      *         debe ser de 10 caracteres</p>
      * 
      * @throws CadenaInvalidaException 
-     *         <p>Cuando la cadena no contiene exactamente 10 caracteres o contiene
-     *         caracteres no numericos</p>
+     *         <p>Cuando la cadena no contiene exactamente 10 caracteress
      * 
-     * @throws CadenaVaciaException
-     *         <p>Cuando la cadena está vacía</p>
+     *         Cuando el parámetro incluye caracteres numéricos
      * 
-     * @throws ParametroNullException
-     *         <p>Cuando el parametro es null</p>
+     *         Cuando el parámetro es un null
+     * 
+     *         Cuando el parámetro es un conjunto vacío</p>
      */
-    public void setTelefono(String telefono)
-            throws CadenaInvalidaException,
-            CadenaVaciaException,
-            ParametroNullException {
+    public void setTelefono(String telefono) throws CadenaInvalidaException {
         if (telefono !=null) {
             if (!telefono.isBlank()) {
                 if (telefono.length()==10 && telefono.chars().allMatch(Character::isDigit)) {
@@ -302,10 +273,10 @@ public class Usuario {
                                     + "10 numeros, sin espacios ni guiones u otros símbolos");
                 }
             } else {
-                throw new CadenaVaciaException("El número de teléfono está vacio");
+                throw new CadenaInvalidaException("El número de teléfono está vacio");
             }
         } else {
-            throw new ParametroNullException("El teléfono no puede ser null");
+            throw new CadenaInvalidaException("El teléfono no puede ser null");
         }
     }
 
@@ -322,22 +293,15 @@ public class Usuario {
      * 
      * @throws CadenaInvalidaException
      *          <p>Cuando la cadena contiene caracteres que no son alfanumericos
-     *          o guión bajo</p>
+     *          o guión bajo.
+     *          
+     *          Cuando el parámetro es un conjunto vacío
      * 
-     * @throws CadenaLargaException
-     *         Cuando la longitud de la cadena excede 20 caracteres
+     *          Cuando el parámetro es null
      * 
-     * @throws CadenaVaciaException
-     *         Cuando la cadena está vacía
-     * 
-     * @throws ParametroNullException
-     *         Cuando el parametro es null
+     *          Cuando el parámetro excede 20 caracteres</p>
      */
-    public void setUsuario(String usuario)
-            throws CadenaInvalidaException,
-            CadenaLargaException,
-            CadenaVaciaException,
-            ParametroNullException {
+    public void setUsuario(String usuario) throws CadenaInvalidaException {
         if (usuario != null) {
             if (!usuario.isBlank()) {
                 if (usuario.length()<=20) {
@@ -349,14 +313,14 @@ public class Usuario {
                                         + "números y guión bajo");
                     }
                 } else {
-                    throw new CadenaLargaException(
+                    throw new CadenaInvalidaException(
                             "El nombre de usuario debe tener un máximo de 20 caracteres");
                 }
             } else {
-                throw new CadenaVaciaException("El nombre de usuario es obligatorio");
+                throw new CadenaInvalidaException("El nombre de usuario es obligatorio");
             }
         } else {
-            throw new ParametroNullException("El nombre de usuario no puede ser null");
+            throw new CadenaInvalidaException("El nombre de usuario no puede ser null");
         }
     }
 
@@ -375,14 +339,14 @@ public class Usuario {
      * @param contrasenia
      *          Puede contener un máximo de 255 caracteres
      * 
-     * @throws CadenaLargaException
+     * @throws CadenaInvalidaException
      *         Cuando la longitud de la cadena excede 255 caracteres
      */
-    public void setContrasenia(String contrasenia) throws CadenaLargaException {
+    public void setContrasenia(String contrasenia) throws CadenaInvalidaException {
         if (contrasenia.length() <= 255) {
             this.contrasenia = contrasenia;
         } else {
-            throw new CadenaLargaException(
+            throw new CadenaInvalidaException(
                     "La contraseña debe contener un máximo de 255 caracteres");
         }
     }
@@ -480,17 +444,14 @@ public class Usuario {
      *         <p>Debe ser un valor con 10 posiciones enteras y 2 de decimales,
      *         conforma a la base de datos
      * 
-     * @throws NumeroNegativoException
+     * @throws NumeroInvalidoException
      *         <p>Cuando el valor es negativo
      * 
-     * @throws IllegalArgumentException
-     *         <p>Cuando el formato DECIMAL(10,2) de MySQL no se cumple
+     *         Cuando el formato DECIMAL(10,2) de MySQL no se cumple</p>
      */
-    public void setSalario(BigDecimal salario)
-            throws NumeroNegativoException,
-            ParametroNullException {
+    public void setSalario(BigDecimal salario) throws NumeroInvalidoException {
         if (salario.compareTo(BigDecimal.ZERO)<0){
-            throw new NumeroNegativoException("El salario debe ser 0 mayor");
+            throw new NumeroInvalidoException("El salario debe ser 0 o mayor");
         }
         this.salario.setScale(2, RoundingMode.HALF_UP);
         
@@ -499,10 +460,10 @@ public class Usuario {
         int digitosDecimales = salario.scale();
         
         if (digitosEnteros > 10) {
-            throw new IllegalArgumentException("La parte entera no puede tener más de 10 dígitos");
+            throw new NumeroInvalidoException("La parte entera no puede tener más de 10 dígitos");
         }
         if (digitosDecimales > 2) {
-            throw new IllegalArgumentException("El valor no puede tener más de 2 decimales");
+            throw new NumeroInvalidoException("El valor no puede tener más de 2 decimales");
         }
         
         this.salario = salario;
