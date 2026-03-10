@@ -468,5 +468,10 @@ public class Usuario {
         
         this.salario = salario;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "idUsuario=" + idUsuario + ", nombre1=" + nombre1 + ", nombre2=" + nombre2 + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", telefono=" + telefono + ", usuario=" + usuario + ", contrasenia=" + contrasenia + ", estadoUsuario=" + estadoUsuario + ", nivelAcceso=" + nivelAcceso + ", rol=" + rol.toString() + ", imagen=" + imagen + ", salario=" + salario + '}';
+    }
     
 }

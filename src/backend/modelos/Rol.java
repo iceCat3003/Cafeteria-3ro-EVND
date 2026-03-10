@@ -76,6 +76,10 @@ public class Rol {
             throw new CadenaInvalidaException("El parámetro no puede ser null");
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "Rol{" + "idRol=" + idRol + ", nombreRol=" + nombreRol + '}';
+    }
     
 }
