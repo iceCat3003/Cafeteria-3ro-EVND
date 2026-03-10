@@ -8,10 +8,7 @@ import backend.db.ConexionDB;
 import backend.enums.EstadoUsuario;
 import backend.enums.NivelAcceso;
 import backend.exceptions.CadenaInvalidaException;
-import backend.exceptions.CadenaLargaException;
-import backend.exceptions.CadenaVaciaException;
-import backend.exceptions.NumeroNegativoException;
-import backend.exceptions.ParametroNullException;
+import backend.exceptions.NumeroInvalidoException;
 import backend.modelos.Usuario;
 import backend.modelos.Rol;
 import java.sql.PreparedStatement;
@@ -76,16 +73,11 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
                     usuario.setRol(rol);
                     usuario.setImagen(rs.getBytes("imagen"));
                     usuario.setSalario(rs.getBigDecimal("salario"));
+                    tabla.add(usuario);
                 }
-            } catch (ParametroNullException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (CadenaLargaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             } catch (CadenaInvalidaException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (CadenaVaciaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (NumeroNegativoException ex) {
+            } catch (NumeroInvalidoException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         } catch (SQLException ex) {
@@ -149,15 +141,9 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
                     usuario.setImagen(rs.getBytes("imagen"));
                     usuario.setSalario(rs.getBigDecimal("salario"));
                 }
-            } catch (ParametroNullException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (CadenaLargaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             } catch (CadenaInvalidaException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (CadenaVaciaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (NumeroNegativoException ex) {
+            } catch (NumeroInvalidoException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         } catch (SQLException ex) {
@@ -224,15 +210,9 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
                     u.setImagen(rs.getBytes("imagen"));
                     u.setSalario(rs.getBigDecimal("salario"));
                 }
-            } catch (ParametroNullException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (CadenaLargaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             } catch (CadenaInvalidaException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (CadenaVaciaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (NumeroNegativoException ex) {
+            } catch (NumeroInvalidoException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         } catch (SQLException ex) {
