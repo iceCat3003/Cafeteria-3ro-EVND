@@ -59,7 +59,7 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
                     Usuario usuario = new Usuario();
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNombre1(rs.getString("nombre1"));
-                    usuario.setNombre2(rs.getString("nombre1"));
+                    usuario.setNombre2(rs.getString("nombre2"));
                     usuario.setApellido1(rs.getString("apellido1"));
                     usuario.setApellido2(rs.getString("apellido2"));
                     usuario.setTelefono(rs.getString("telefono"));
@@ -126,7 +126,7 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
                     usuario = new Usuario();
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNombre1(rs.getString("nombre1"));
-                    usuario.setNombre2(rs.getString("nombre1"));
+                    usuario.setNombre2(rs.getString("nombre2"));
                     usuario.setApellido1(rs.getString("apellido1"));
                     usuario.setApellido2(rs.getString("apellido2"));
                     usuario.setTelefono(rs.getString("telefono"));
