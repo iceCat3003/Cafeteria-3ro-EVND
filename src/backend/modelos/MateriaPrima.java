@@ -4,7 +4,11 @@
  */
 package backend.modelos;
 
+import backend.exceptions.CadenaInvalidaException;
+import backend.exceptions.NumeroInvalidoException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 
 /**
  * Clase para la tabla MateriasPrimas
@@ -21,57 +25,203 @@ public class MateriaPrima {
 
     public MateriaPrima() {}
 
+    /**
+     * Obtiene el idMateria correspondiente a la columna del mismo nombre
+     * 
+     * @return un entero correspondiente a idMateria de la tabla MateriasPrimas 
+     */
     public int getIdMateria() {
         return idMateria;
     }
 
+    /**
+     * Establece el idMateria correspondiente a la columna del mismo nombre
+     * @param idMateria Un entero correspondiente al idMateria
+     */
     public void setIdMateria(int idMateria) {
         this.idMateria = idMateria;
     }
 
+    /**
+     * Obtiene el nombre de la materia prima
+     * 
+     * @return Una cadena correspondiente a la columna nombre
+     */
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    /**
+     * Establece el nombre correspondiente a la columna del mismo nombre
+     * 
+     * @param nombre una cadena de no mas de 50 caracteres, sin caracteres especiales
+     * 
+     * @throws CadenaInvalidaException
+     *         <p>Cuando la cadena incluye caracteres que no son A-Z, a-z, Ñ, ñ
+     *         o vocales con acento.
+     * 
+     *         Cuando la cadena contiene más de 50 caracteres.
+     *         
+     *         Cuando la cadena está vacía o contiene solo espacios.
+     * 
+     *         Cuando el parámetro es null.</p>
+     */
+    public void setNombre(String nombre) throws CadenaInvalidaException {
+        if (nombre !=null) {
+            if (!nombre.isBlank()) {
+                if (nombre.length() <= 50) {
+                    if (nombre.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
+                        this.nombre = nombre.trim();
+                    } else {
+                        throw new CadenaInvalidaException(
+                                "La cadena no puede tener caracteres especiales");
+                    }
+                } else {
+                    throw new CadenaInvalidaException("La cadena excede 50 caracteres");
+                }
+            } else {
+                throw new CadenaInvalidaException("No se admiten cadenas vacías");
+            }
+        } else {
+            throw new CadenaInvalidaException("El valor no puede ser null");
+        }
     }
 
+    /**
+     * Obtiene la cantidad de piezas disponibles de acuerdo a la columna del mismo nombre
+     * 
+     * @return Un entero correspondiente a la columna cantidad
+     */
     public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    /**
+     * Establece la cantidad absoluta de piezas, debe ser un valor de 0 o mayor
+     * 
+     * @param cantidad un entero correspondiente a la columna cantidad
+     * 
+     * @throws IllegalArgumentException
+     *         <p>Cuando el valor ingresado es menor a cero
+     */
+    public void setCantidad(int cantidad) throws IllegalArgumentException {
+        if (cantidad >= 0) {
+            this.cantidad = cantidad;
+        } else {
+            throw new IllegalArgumentException("La cantidad debe ser igual o mayor a cero");
+        }
     }
 
+    /**
+     * <p>Obtiene la foto correspondiente al mediumblob de su columna correspondiente
+     * como un byte[]</p>
+     * 
+     * @return un byte[] de una foto
+     */
     public byte[] getFoto() {
         return foto;
     }
 
+    /**
+     * Establece un byte[] para la columna foto, no debe exceder 16,777,215 bytes
+     * 
+     * @param foto Una foto convertida a byte[]
+     */
     public void setFoto(byte[] foto) {
-        this.foto = foto;
+        if (foto.length <= 16777215) {
+            this.foto = foto;
+        } else {
+            throw new IllegalArgumentException("la foto excede 16,777,215 bytes");
+        }
     }
 
+    /**
+     * Obtiene el valor de la columna costo como un BigDecimal
+     * 
+     * @return Un BigDecimal correspondiente a la columna correspondiente a costo
+     */
     public BigDecimal getCosto() {
         return costo;
     }
 
-    public void setCosto(BigDecimal costo) {
-        this.costo = costo;
+    /**
+     * Establece el valor de la columna costo de la tabla MateriasPrimas
+     * 
+     * @param costo
+     *         <p>Debe ser un valor compatible con DECIMAL(12,2) de MySQL
+     * @throws NumeroInvalidoException 
+     */
+    public void setCosto(BigDecimal costo) throws NumeroInvalidoException {
+        if (costo != null){
+            if (costo.compareTo(BigDecimal.ZERO)<0) {
+                throw new NumeroInvalidoException("El valor debe ser mayor o igual a cero");
+            }
+            this.costo.setScale(2, RoundingMode.HALF_UP);
+            
+            BigInteger parteEntera = costo.toBigInteger();
+            int digitosEnteros = parteEntera.toString().length();
+            int digitosDecimales = costo.scale();
+            
+            if (digitosEnteros > 10) {
+                throw new NumeroInvalidoException("La parte entera no puede tener más de 10 dígitos");
+            }
+            if (digitosDecimales > 2) {
+                throw new NumeroInvalidoException("El valor no puede tener más de 2 decimales");
+            }
+            
+            this.costo = costo;
+        } else {
+            throw new IllegalArgumentException("el valor no puede ser null");
+        }
+        
     }
 
+    /**
+     * Obtiene la descripcion correspondiente a la columna del mismo nombre
+     * 
+     * @return Una cadena correspondiente a la columna descripcion
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    /**
+     * Establece la descripcion para la tabla descripcion
+     * 
+     * @param descripcion una cadena correspondiente a la columna descripcion
+     * 
+     * @throws CadenaInvalidaException
+     *         <p>Cuando la cadena incluye caracteres especiales como . , \ = etc.
+     *
+     *          Cuando la cadena está conformada por más de 255 caracteres
+     */
+    public void setDescripcion(String descripcion) throws CadenaInvalidaException {
+        if(descripcion != null && !descripcion.isBlank()) {
+            if (descripcion.length() <= 255) {
+                if (descripcion.matches("^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\\s'-]+$")) {
+                    this.descripcion = descripcion.trim();
+                } else {
+                    throw new CadenaInvalidaException(
+                            "La cadena no puede contener caracteres especiales");
+                }
+            } else{
+                throw new CadenaInvalidaException(
+                        "La cadena debe tener un máximo de 255 caracteres");
+            }
+        } else {
+            this.descripcion = null;
+        }
     }
 
     @Override
     public String toString() {
-        return "MateriaPrima{" + "idMateria=" + idMateria + ", nombre=" + nombre + ", cantidad=" + cantidad + ", foto=" + foto + ", costo=" + costo + ", descripcion=" + descripcion + '}';
+        return "MateriaPrima{" + 
+                "idMateria=" + idMateria + 
+                ", nombre=" + nombre + 
+                ", cantidad=" + cantidad + 
+                ", foto=" + foto + 
+                ", costo=" + costo + 
+                ", descripcion=" + descripcion + '}';
     }
     
 }

@@ -53,9 +53,9 @@ public class Usuario {
     }
 
     /**
-     * Obtiene unicamente el campo del primer nombre del Usuario
+     * <p>Obtiene unicamente el campo del primer nombre del Usuario</p>
      * 
-     * @return el campo nombre1
+     * @return el campo <b>nombre1</b>
      */
     public String getNombre1() {
         return nombre1;
@@ -63,14 +63,14 @@ public class Usuario {
     
     /**
      * <p>Guarda el primer nombre del usuario siguiendo las reglas y validaciones
-     * de la base de datos
+     * de la base de datos</p>
      * 
      * @param nombre1
-     *          Es el nombre1 como se especifica en la base de datos
+     *         <p>Es el nombre1 como se especifica en la base de datos</p>
      * 
      * @throws CadenaInvalidaException
      *         <p>Cuando la cadena contiene caracteres que no sean alfanumericos, 
-     *         vocales con tilde o espacio
+     *         vocales con tilde o espacio</p>
     */
     public void setNombre1(String nombre1) throws CadenaInvalidaException {
         if (nombre1!=null && !nombre1.isBlank()) {
@@ -102,15 +102,15 @@ public class Usuario {
 
     /**
      * <p>Guarda el segundo nombre del usuario siguiendo las reglas y validaciones 
-     * de la base de datos
+     * de la base de datos</p>
      * 
      * @param nombre2
      *          <p>Este es el nombre2 como se especifica en la base de datos. 
-     *          El parámetro puede ser null
+     *          El parámetro puede ser null</p>
      * 
      * @throws CadenaInvalidaException
      *         <p>cuando contiene números o si contiene caracteres especiales 
-     *         (ñ y vocales con acento son válidos)
+     *         (ñ y vocales con acento son válidos)</p>
     */
     public void setNombre2(String nombre2)
             throws CadenaInvalidaException {
@@ -254,13 +254,12 @@ public class Usuario {
      *         debe ser de 10 caracteres</p>
      * 
      * @throws CadenaInvalidaException 
-     *         <p>Cuando la cadena no contiene exactamente 10 caracteress
-     * 
-     *         Cuando el parámetro incluye caracteres numéricos
-     * 
-     *         Cuando el parámetro es un null
-     * 
-     *         Cuando el parámetro es un conjunto vacío</p>
+     *          <ul>
+     *              <li>Cuando la cadena no contiene exactamente 10 caracteress</li>
+     *              <li>Cuando el parámetro incluye caracteres numéricos</li>
+     *              <li>Cuando el parámetro es un null</li>
+     *              <li>Cuando el parámetro es un conjunto vacío</li>
+     *          </ul>
      */
     public void setTelefono(String telefono) throws CadenaInvalidaException {
         if (telefono !=null) {
@@ -280,26 +279,30 @@ public class Usuario {
         }
     }
 
+    /**
+     * Obtiene el nombre de usuario de la columna usuario de la tabla Usuarios
+     * 
+     * @return Una cadena con el campo <b>usuario</b>
+     */
     public String getUsuario() {
         return usuario;
     }
 
     /**
      * <p>Establece el nombre de usuario validando que no contenga caracteres
-     * fuera de letras, números y guión bajo</p>
+     * fuera de letras, números y guión bajo, no se admite Ñ o tildes</p>
      * 
      * @param usuario
      *          <p>Conforme a las condiciones establecidas por la base de datos</p>
      * 
      * @throws CadenaInvalidaException
-     *          <p>Cuando la cadena contiene caracteres que no son alfanumericos
-     *          o guión bajo.
-     *          
-     *          Cuando el parámetro es un conjunto vacío
-     * 
-     *          Cuando el parámetro es null
-     * 
-     *          Cuando el parámetro excede 20 caracteres</p>
+     *          <ul>
+     *              <li>Cuando la cadena contiene caracteres que no son alfanumericos
+     *              o guión bajo.</li>
+     *              <li>Cuando el parámetro es un conjunto vacío.</li>
+     *              <li>Cuando el parámetro es null.</li>
+     *              <li>Cuando el parámetro excede 20 caracteres.</li>
+     *          </ul>
      */
     public void setUsuario(String usuario) throws CadenaInvalidaException {
         if (usuario != null) {
