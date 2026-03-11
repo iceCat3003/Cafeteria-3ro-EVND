@@ -213,6 +213,11 @@ public class MateriaPrima {
         }
     }
 
+    /**
+     * Devuelve una cadena con los atributos del objeto
+     * 
+     * @return un String con atributos
+     */
     @Override
     public String toString() {
         return "MateriaPrima{" + 

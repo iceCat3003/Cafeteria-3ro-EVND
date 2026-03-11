@@ -8,7 +8,6 @@ import backend.db.ConexionDB;
 import backend.exceptions.CadenaInvalidaException;
 import backend.exceptions.NumeroInvalidoException;
 import backend.modelos.MateriaPrima;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,6 +60,14 @@ public class MateriaPrimaDAO implements InterfazDAO<MateriaPrima> {
         return tabla;
     }
 
+    /**
+     * <p>Devuelve una fila de la tabla <b>MateriasPrimas</p> correspondiente al
+     * <b>idMateria</b></p>
+     * 
+     * @param id Debe ser un entero que corresponda a un <b>idMateria<b>
+     * @return <p>Un objeto <b>MateriaPrima</b> con los atributos
+     *          corrrespondientes a la fila encontrada</p>
+     */
     @Override
     public MateriaPrima obtenerPorID(int id) {
         MateriaPrima mp = null;
@@ -91,8 +98,23 @@ public class MateriaPrimaDAO implements InterfazDAO<MateriaPrima> {
         return mp;
     }
 
+    /**
+     * <p>Inserta una fila a la tabla <b>MateriasPrimas</b> utilizando los
+     * atributos del objeto parámetro.
+     * 
+     * @param mp Debe ser un objeto con todos sus atributos, 
+     *            excepto por los que aceptan null en BD
+     * @return 
+     */
     @Override
     public int insertar(MateriaPrima mp) {
+        if (mp.getNombre()==null ||
+                mp.getCosto()==null ||
+                mp.getDescripcion()==null){
+            throw new IllegalArgumentException(
+                    "El objeto MateriaPrima no está completado correctamente\n"+
+                            mp.toString());
+        }
         ConexionDB conexion = new ConexionDB();
         final String SQL = "INSERT INTO MateriasPrimas"
                 + "(nombre,cantidad,foto,costo,descripcion) VALUES "
@@ -150,7 +172,18 @@ public class MateriaPrimaDAO implements InterfazDAO<MateriaPrima> {
 
     @Override
     public boolean borrar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ConexionDB conexion = new ConexionDB();
+        final String SQL = "DELETE MateriasPrimas WHERE idMateria=?";
+        try (
+                Connection con = conexion.conectar();
+                PreparedStatement ps = con.prepareStatement(SQL);
+                ) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return false;
     }
     
 }

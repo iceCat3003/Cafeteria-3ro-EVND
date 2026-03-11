@@ -22,7 +22,7 @@ import org.mariadb.jdbc.Statement;
  *
  * @author Espinoza Cortés Daniel
  */
-public class UsuarioDAO implements InterfazDAO<Usuario>{
+public class UsuarioDAO implements InterfazDAO<Usuario> {
 
     /**
      * Obtiene una lista con todos los usuarios
@@ -99,55 +99,59 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
     @Override
     public Usuario obtenerPorID(int id) {
         Usuario usuario = null;
-        Rol rol = null;
-        final String SQL = "SELECT Usuarios.idUsuario, Usuarios.nombre1, "+
-                "Usuarios.apellido1, " +
-                "Usuarios.apellido2, " +
-                "Usuarios.telefono, " +
-                "Usuarios.usuario, " +
-                "Usuarios.contrasenia, " +
-                "Usuarios.estadoUsuario, " +
-                "Usuarios.nivelAcceso, " +
-                "Usuarios.idRol, " +
-                "Roles.nombreRol, " +
-                "Usuarios.imagen, " +
-                "Usuarios.salario " +
-                "FROM Usuarios " +
-                "INNER JOIN Roles ON Usuarios.idRol=Roles.idRol " +
-                "WHERE Usuarios.idUsuario=?";
-        ConexionDB conexionDB = new ConexionDB();
-        try (
-                Connection con = conexionDB.conectar();
-                PreparedStatement prep = con.prepareStatement(SQL);
-                ResultSet rs = prep.executeQuery();
-                ) {
-            try {
-                while (rs.next()) {
-                    usuario = new Usuario();
-                    usuario.setIdUsuario(rs.getInt("idUsuario"));
-                    usuario.setNombre1(rs.getString("nombre1"));
-                    usuario.setNombre2(rs.getString("nombre2"));
-                    usuario.setApellido1(rs.getString("apellido1"));
-                    usuario.setApellido2(rs.getString("apellido2"));
-                    usuario.setTelefono(rs.getString("telefono"));
-                    usuario.setUsuario(rs.getString("usuario"));
-                    usuario.setContrasenia(rs.getString("contrasenia"));
-                    usuario.setEstadoUsuario(EstadoUsuario.valueOf(rs.getString("estadoUsuario")));
-                    usuario.setNivelAcceso(NivelAcceso.valueOf(rs.getString("nivelAcceso")));
-                    rol = new Rol();
-                    rol.setIdRol(rs.getInt("idRol"));
-                    rol.setNombreRol(rs.getString("nombreRol"));
-                    usuario.setRol(rol);
-                    usuario.setImagen(rs.getBytes("imagen"));
-                    usuario.setSalario(rs.getBigDecimal("salario"));
+        if (id>0) {
+            Rol rol = null;
+            final String SQL = "SELECT Usuarios.idUsuario, Usuarios.nombre1, "+
+                    "Usuarios.apellido1, " +
+                    "Usuarios.apellido2, " +
+                    "Usuarios.telefono, " +
+                    "Usuarios.usuario, " +
+                    "Usuarios.contrasenia, " +
+                    "Usuarios.estadoUsuario, " +
+                    "Usuarios.nivelAcceso, " +
+                    "Usuarios.idRol, " +
+                    "Roles.nombreRol, " +
+                    "Usuarios.imagen, " +
+                    "Usuarios.salario " +
+                    "FROM Usuarios " +
+                    "INNER JOIN Roles ON Usuarios.idRol=Roles.idRol " +
+                    "WHERE Usuarios.idUsuario=?";
+            ConexionDB conexionDB = new ConexionDB();
+            try (
+                    Connection con = conexionDB.conectar();
+                    PreparedStatement prep = con.prepareStatement(SQL);
+                    ResultSet rs = prep.executeQuery();
+                    ) {
+                try {
+                    while (rs.next()) {
+                        usuario = new Usuario();
+                        usuario.setIdUsuario(rs.getInt("idUsuario"));
+                        usuario.setNombre1(rs.getString("nombre1"));
+                        usuario.setNombre2(rs.getString("nombre2"));
+                        usuario.setApellido1(rs.getString("apellido1"));
+                        usuario.setApellido2(rs.getString("apellido2"));
+                        usuario.setTelefono(rs.getString("telefono"));
+                        usuario.setUsuario(rs.getString("usuario"));
+                        usuario.setContrasenia(rs.getString("contrasenia"));
+                        usuario.setEstadoUsuario(EstadoUsuario.valueOf(rs.getString("estadoUsuario")));
+                        usuario.setNivelAcceso(NivelAcceso.valueOf(rs.getString("nivelAcceso")));
+                        rol = new Rol();
+                        rol.setIdRol(rs.getInt("idRol"));
+                        rol.setNombreRol(rs.getString("nombreRol"));
+                        usuario.setRol(rol);
+                        usuario.setImagen(rs.getBytes("imagen"));
+                        usuario.setSalario(rs.getBigDecimal("salario"));
+                    }
+                } catch (CadenaInvalidaException ex) {
+                    System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                } catch (NumeroInvalidoException ex) {
+                    System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
-            } catch (CadenaInvalidaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (NumeroInvalidoException ex) {
+            } catch (SQLException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-        } catch (SQLException ex) {
-            System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } else {
+            throw new IllegalArgumentException("El idUsuario debe ser mayor a cero");
         }
         return usuario;
     }
@@ -168,55 +172,59 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
     public Usuario loginUsuario(String usuario, String contrasenia){
         Usuario u = null;
         Rol rol = null;
-        final String SQL = "SELECT Usuarios.idUsuario, Usuarios.nombre1, "+
-                "Usuarios.apellido1, " +
-                "Usuarios.apellido2, " +
-                "Usuarios.telefono, " +
-                "Usuarios.usuario, " +
-                "Usuarios.contrasenia, " +
-                "Usuarios.estadoUsuario, " +
-                "Usuarios.nivelAcceso, " +
-                "Usuarios.idRol, " +
-                "Roles.nombreRol, " +
-                "Usuarios.imagen, " +
-                "Usuarios.salario " +
-                "FROM Usuarios " +
-                "INNER JOIN Roles ON Usuarios.idRol=Roles.idRol " +
-                "WHERE Usuarios.usuario=? AND Usuarios.contrasenia=?";
-        ConexionDB conexionDB = new ConexionDB();
-        try (
-                Connection con = conexionDB.conectar();
-                PreparedStatement prep = con.prepareStatement(SQL);
-                ) {
-            prep.setString(1, usuario);
-            prep.setString(2, contrasenia);
-            ResultSet rs = prep.executeQuery();
-            try {
-                while (rs.next()) {
-                    u = new Usuario();
-                    u.setIdUsuario(rs.getInt("idUsuario"));
-                    u.setNombre1(rs.getString("nombre1"));
-                    u.setNombre2(rs.getString("nombre2"));
-                    u.setApellido1(rs.getString("apellido1"));
-                    u.setApellido2(rs.getString("apellido2"));
-                    u.setTelefono(rs.getString("telefono"));
-                    u.setUsuario(rs.getString("usuario"));
-                    u.setContrasenia(rs.getString("contrasenia"));
-                    u.setEstadoUsuario(EstadoUsuario.valueOf(rs.getString("estadoUsuario")));
-                    u.setNivelAcceso(NivelAcceso.valueOf(rs.getString("nivelAcceso")));
-                    rol.setIdRol(rs.getInt("idRol"));
-                    rol.setNombreRol(rs.getString("nombreRol"));
-                    u.setRol(rol);
-                    u.setImagen(rs.getBytes("imagen"));
-                    u.setSalario(rs.getBigDecimal("salario"));
+        if (usuario!=null && !usuario.isBlank() && contrasenia!=null && contrasenia.isBlank()) {
+            final String SQL = "SELECT Usuarios.idUsuario, Usuarios.nombre1, "+
+                    "Usuarios.apellido1, " +
+                    "Usuarios.apellido2, " +
+                    "Usuarios.telefono, " +
+                    "Usuarios.usuario, " +
+                    "Usuarios.contrasenia, " +
+                    "Usuarios.estadoUsuario, " +
+                    "Usuarios.nivelAcceso, " +
+                    "Usuarios.idRol, " +
+                    "Roles.nombreRol, " +
+                    "Usuarios.imagen, " +
+                    "Usuarios.salario " +
+                    "FROM Usuarios " +
+                    "INNER JOIN Roles ON Usuarios.idRol=Roles.idRol " +
+                    "WHERE Usuarios.usuario=? AND Usuarios.contrasenia=?";
+            ConexionDB conexionDB = new ConexionDB();
+            try (
+                    Connection con = conexionDB.conectar();
+                    PreparedStatement prep = con.prepareStatement(SQL);
+                    ) {
+                prep.setString(1, usuario);
+                prep.setString(2, contrasenia);
+                ResultSet rs = prep.executeQuery();
+                try {
+                    while (rs.next()) {
+                        u = new Usuario();
+                        u.setIdUsuario(rs.getInt("idUsuario"));
+                        u.setNombre1(rs.getString("nombre1"));
+                        u.setNombre2(rs.getString("nombre2"));
+                        u.setApellido1(rs.getString("apellido1"));
+                        u.setApellido2(rs.getString("apellido2"));
+                        u.setTelefono(rs.getString("telefono"));
+                        u.setUsuario(rs.getString("usuario"));
+                        u.setContrasenia(rs.getString("contrasenia"));
+                        u.setEstadoUsuario(EstadoUsuario.valueOf(rs.getString("estadoUsuario")));
+                        u.setNivelAcceso(NivelAcceso.valueOf(rs.getString("nivelAcceso")));
+                        rol.setIdRol(rs.getInt("idRol"));
+                        rol.setNombreRol(rs.getString("nombreRol"));
+                        u.setRol(rol);
+                        u.setImagen(rs.getBytes("imagen"));
+                        u.setSalario(rs.getBigDecimal("salario"));
+                    }
+                } catch (CadenaInvalidaException ex) {
+                    System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                } catch (NumeroInvalidoException ex) {
+                    System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
-            } catch (CadenaInvalidaException ex) {
-                System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            } catch (NumeroInvalidoException ex) {
+            } catch (SQLException ex) {
                 System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-        } catch (SQLException ex) {
-            System.getLogger(ConexionDB.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } else {
+            throw new IllegalArgumentException("Ambos parámetros deben tener contenido");
         }
         return u;
     }
@@ -233,6 +241,20 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
      */
     @Override
     public int insertar(Usuario usuario) {
+        if (usuario.getNombre1()==null ||
+                usuario.getApellido1()==null ||
+                usuario.getTelefono()==null ||
+                usuario.getUsuario()==null ||
+                usuario.getContrasenia()==null ||
+                usuario.getEstadoUsuario()==null ||
+                usuario.getNivelAcceso()==null ||
+                usuario.getRol()==null ||
+                usuario.getRol().getIdRol()<1 ||
+                usuario.getSalario()==null){
+            throw new IllegalArgumentException(
+                    "El objeto Usuario no está completado correctamente\n"+
+                            usuario.toString());
+        }
         int id =0;
         ConexionDB conexion = new ConexionDB();
         final String SQL = "INSERT INTO Usuarios VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -274,6 +296,21 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
      */
     @Override
     public boolean actualizar(Usuario usuario) {
+        if (usuario.getNombre1()==null ||
+                usuario.getApellido1()==null ||
+                usuario.getTelefono()==null ||
+                usuario.getUsuario()==null ||
+                usuario.getContrasenia()==null ||
+                usuario.getEstadoUsuario()==null ||
+                usuario.getNivelAcceso()==null ||
+                usuario.getRol()==null ||
+                usuario.getRol().getIdRol()<1 ||
+                usuario.getSalario()==null ||
+                usuario.getIdUsuario()<1){
+            throw new IllegalArgumentException(
+                    "El objeto Usuario no está completado correctamente\n"+
+                            usuario.toString());
+        }
         ConexionDB conexion = new ConexionDB();
         final String SQL = "UPDATE Usuarios SET"
                 + "nombre1=?,"//1
@@ -322,6 +359,9 @@ public class UsuarioDAO implements InterfazDAO<Usuario>{
      */
     @Override
     public boolean borrar(int id) {
+        if (id<1) {
+            throw new IllegalArgumentException("El id debe ser mayor a 0");
+        }
         ConexionDB conexon = new ConexionDB();
         final String SQL = "DELETE Usuarios WHERE idUsuario=?";
         try (
