@@ -442,36 +442,53 @@ public class Usuario {
      * 
      * @param salario 
      *         <p>Debe ser un valor con 10 posiciones enteras y 2 de decimales,
-     *         conforma a la base de datos
+     *         conforme a la base de datos</p>
      * 
      * @throws NumeroInvalidoException
-     *         <p>Cuando el valor es negativo
-     * 
-     *         Cuando el formato DECIMAL(10,2) de MySQL no se cumple</p>
+     *         <ul>
+     *              <li>Cuando el valor es negativo</li>
+     *              <li>Cuando el valor excede 9,999,999,999.99</li>
+     *         </ul>
      */
     public void setSalario(BigDecimal salario) throws NumeroInvalidoException {
-        if (salario.compareTo(BigDecimal.ZERO)<0){
-            throw new NumeroInvalidoException("El salario debe ser 0 o mayor");
-        }
-        this.salario.setScale(2, RoundingMode.HALF_UP);
-        
-        BigInteger parteEntera = salario.toBigInteger();
-        int digitosEnteros = parteEntera.toString().length();
-        int digitosDecimales = salario.scale();
-        
-        if (digitosEnteros > 10) {
-            throw new NumeroInvalidoException("La parte entera no puede tener más de 10 dígitos");
-        }
-        if (digitosDecimales > 2) {
-            throw new NumeroInvalidoException("El valor no puede tener más de 2 decimales");
-        }
-        
-        this.salario = salario;
+    if (salario == null) {
+        throw new NumeroInvalidoException("El salario no puede ser null");
     }
+    
+    if (salario.compareTo(BigDecimal.ZERO) < 0) {
+        throw new NumeroInvalidoException("El salario debe ser 0 o mayor");
+    }
+    
+    if (salario.compareTo(new BigDecimal("9999999999.99")) > 0) {
+        throw new NumeroInvalidoException(
+            "El salario excede el máximo permitido: 9,999,999,999.99"
+        );
+    }
+    
+    this.salario = salario.setScale(2, RoundingMode.HALF_UP);
+}
 
+    /**
+     * <p>Devuelve una cadena con los nombres y atributos del objeto,
+     * incluyendo los atributos de su objeto Rol</p>
+     * 
+     * @return Una cadena compuesta por los nombres de los atributos y sus valores
+     */
     @Override
     public String toString() {
-        return "Usuario{" + "idUsuario=" + idUsuario + ", nombre1=" + nombre1 + ", nombre2=" + nombre2 + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", telefono=" + telefono + ", usuario=" + usuario + ", contrasenia=" + contrasenia + ", estadoUsuario=" + estadoUsuario + ", nivelAcceso=" + nivelAcceso + ", rol=" + rol.toString() + ", imagen=" + imagen + ", salario=" + salario + '}';
+        return "Usuario{" + "idUsuario=" + idUsuario + 
+                ", nombre1=" + nombre1 + 
+                ", nombre2=" + nombre2 + 
+                ", apellido1=" + apellido1 + 
+                ", apellido2=" + apellido2 + 
+                ", telefono=" + telefono + 
+                ", usuario=" + usuario + 
+                ", contrasenia=" + contrasenia + 
+                ", estadoUsuario=" + estadoUsuario + 
+                ", nivelAcceso=" + nivelAcceso + 
+                ", rol=[" + rol.toString() + "]"+ 
+                ", imagen=" + imagen + 
+                ", salario=" + salario + '}';
     }
     
 }
