@@ -158,20 +158,20 @@ public class MateriaPrima {
      * @throws IllegalArgumentException Cuando el parámetro es null
      */
     public void setCosto(BigDecimal costo) throws NumeroInvalidoException {
-    if (costo == null) {
-        throw new NumeroInvalidoException("El costo no puede ser null");
-    }
-    
-    if (costo.compareTo(BigDecimal.ZERO) < 0) {
-        throw new NumeroInvalidoException("El costo debe ser 0 o mayor");
-    }
-    
-    if (costo.compareTo(new BigDecimal("9999999999.99")) > 0) {
-        throw new NumeroInvalidoException(
-            "El costo excede el máximo permitido: 9,999,999,999.99"
-        );
-    }
-        
+        if (costo == null) {
+            throw new NumeroInvalidoException("El costo no puede ser null");
+        }
+
+        if (costo.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NumeroInvalidoException("El costo debe ser 0 o mayor");
+        }
+
+        if (costo.compareTo(new BigDecimal("9999999999.99")) > 0) {
+            throw new NumeroInvalidoException(
+                "El costo excede el máximo permitido: 9,999,999,999.99"
+            );
+        }
+        this.costo = costo.setScale(2, RoundingMode.HALF_UP);
     }
 
     /**
