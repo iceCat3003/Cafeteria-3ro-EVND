@@ -455,22 +455,22 @@ public class Usuario {
      * @throws IllegalArgumentException Cuando el parámetro es null
      */
     public void setSalario(BigDecimal salario) throws NumeroInvalidoException {
-    if (salario == null) {
-        throw new NumeroInvalidoException("El salario no puede ser null");
+        if (salario == null) {
+            throw new NumeroInvalidoException("El salario no puede ser null");
+        }
+
+        if (salario.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NumeroInvalidoException("El salario debe ser 0 o mayor");
+        }
+
+        if (salario.compareTo(new BigDecimal("9999999999.99")) > 0) {
+            throw new NumeroInvalidoException(
+                "El salario excede el máximo permitido: 9,999,999,999.99"
+            );
+        }
+
+        this.salario = salario.setScale(2, RoundingMode.HALF_UP);
     }
-    
-    if (salario.compareTo(BigDecimal.ZERO) < 0) {
-        throw new NumeroInvalidoException("El salario debe ser 0 o mayor");
-    }
-    
-    if (salario.compareTo(new BigDecimal("9999999999.99")) > 0) {
-        throw new NumeroInvalidoException(
-            "El salario excede el máximo permitido: 9,999,999,999.99"
-        );
-    }
-    
-    this.salario = salario.setScale(2, RoundingMode.HALF_UP);
-}
 
     /**
      * <p>Devuelve una cadena con los nombres y atributos del objeto,
