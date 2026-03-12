@@ -225,5 +225,5 @@ public class MateriaPrima {
                 ", costo=" + costo + 
                 ", descripcion=" + descripcion + '}';
     }
-    
+    //jajajaja
 }
