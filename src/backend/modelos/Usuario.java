@@ -452,6 +452,7 @@ public class Usuario {
      *              <li>Cuando el valor es negativo</li>
      *              <li>Cuando el valor excede 9,999,999,999.99</li>
      *         </ul>
+     * @throws IllegalArgumentException Cuando el parámetro es null
      */
     public void setSalario(BigDecimal salario) throws NumeroInvalidoException {
     if (salario == null) {

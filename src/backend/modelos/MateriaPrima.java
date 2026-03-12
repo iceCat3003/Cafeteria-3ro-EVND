@@ -57,14 +57,13 @@ public class MateriaPrima {
      * @param nombre una cadena de no mas de 50 caracteres, sin caracteres especiales
      * 
      * @throws CadenaInvalidaException
-     *         <p>Cuando la cadena incluye caracteres que no son A-Z, a-z, Ñ, ñ
-     *         o vocales con acento.
-     * 
-     *         Cuando la cadena contiene más de 50 caracteres.
-     *         
-     *         Cuando la cadena está vacía o contiene solo espacios.
-     * 
-     *         Cuando el parámetro es null.</p>
+     * <ul>
+     *         <li>Cuando la cadena incluye caracteres que no son A-Z, a-z, Ñ, ñ
+     *         o vocales con acento.</li>
+     *         <li>Cuando la cadena contiene más de 50 caracteres.</li>
+     *         <li>Cuando la cadena está vacía o contiene solo espacios.</li>
+     *         <li>Cuando el parámetro es null.</li>
+     * </ul>
      */
     public void setNombre(String nombre) throws CadenaInvalidaException {
         if (nombre !=null) {
@@ -102,7 +101,7 @@ public class MateriaPrima {
      * @param cantidad un entero correspondiente a la columna cantidad
      * 
      * @throws IllegalArgumentException
-     *         <p>Cuando el valor ingresado es menor a cero
+     *         <p>Cuando el valor ingresado es menor a cero</p>
      */
     public void setCantidad(int cantidad) throws IllegalArgumentException {
         if (cantidad >= 0) {
@@ -145,34 +144,33 @@ public class MateriaPrima {
     }
 
     /**
-     * Establece el valor de la columna costo de la tabla MateriasPrimas
+     * Establece el salario del Usuario
      * 
-     * @param costo
-     *         <p>Debe ser un valor compatible con DECIMAL(12,2) de MySQL
-     * @throws NumeroInvalidoException 
+     * @param costo 
+     *         <p>Debe ser un valor con 10 posiciones enteras y 2 de decimales,
+     *         conforme a la base de datos</p>
+     * 
+     * @throws NumeroInvalidoException
+     *         <ul>
+     *              <li>Cuando el valor es negativo</li>
+     *              <li>Cuando el valor excede 9,999,999,999.99</li>
+     *         </ul>
+     * @throws IllegalArgumentException Cuando el parámetro es null
      */
     public void setCosto(BigDecimal costo) throws NumeroInvalidoException {
-        if (costo != null){
-            if (costo.compareTo(BigDecimal.ZERO)<0) {
-                throw new NumeroInvalidoException("El valor debe ser mayor o igual a cero");
-            }
-            this.costo.setScale(2, RoundingMode.HALF_UP);
-            
-            BigInteger parteEntera = costo.toBigInteger();
-            int digitosEnteros = parteEntera.toString().length();
-            int digitosDecimales = costo.scale();
-            
-            if (digitosEnteros > 10) {
-                throw new NumeroInvalidoException("La parte entera no puede tener más de 10 dígitos");
-            }
-            if (digitosDecimales > 2) {
-                throw new NumeroInvalidoException("El valor no puede tener más de 2 decimales");
-            }
-            
-            this.costo = costo;
-        } else {
-            throw new IllegalArgumentException("el valor no puede ser null");
-        }
+    if (costo == null) {
+        throw new NumeroInvalidoException("El costo no puede ser null");
+    }
+    
+    if (costo.compareTo(BigDecimal.ZERO) < 0) {
+        throw new NumeroInvalidoException("El costo debe ser 0 o mayor");
+    }
+    
+    if (costo.compareTo(new BigDecimal("9999999999.99")) > 0) {
+        throw new NumeroInvalidoException(
+            "El costo excede el máximo permitido: 9,999,999,999.99"
+        );
+    }
         
     }
 
