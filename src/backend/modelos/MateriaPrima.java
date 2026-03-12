@@ -144,7 +144,7 @@ public class MateriaPrima {
     }
 
     /**
-     * Establece el salario del Usuario
+     * Establece el costo de la MateriaPrima
      * 
      * @param costo 
      *         <p>Debe ser un valor con 10 posiciones enteras y 2 de decimales,
