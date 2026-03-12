@@ -7,7 +7,6 @@ package backend.modelos;
 import backend.exceptions.CadenaInvalidaException;
 import backend.exceptions.NumeroInvalidoException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 
 /**
